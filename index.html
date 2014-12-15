@@ -1,0 +1,2407 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="stylesheet" href="css/solarized_light.css">
+        <link rel="stylesheet" href="css/normalize.min.css">
+        <link rel="stylesheet" href="css/main.css">
+        <link rel="stylesheet" href="css/owl.css">
+        <link rel="stylesheet" href="octicons/octicons.css">
+
+        <script src="js/vendor/modernizr-2.6.2.min.js"></script>
+        <script src="js/vendor/jquery-1.11.1.min.js"></script>
+        <script src="js/vendor/highlight.pack.js"></script>
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+        <div id="content">
+          <div id="documentation-list">
+            <div class="lighter">
+              <div class="search-box">
+                <form>
+                  <span class="octicon octicon-search"></span>
+                  <input type="text" class="search rounded" placeholder="Search...">
+                </form>
+              </div>
+            </div>
+            <ul class="list">
+              
+<li>
+  <div class="detail_header" id="alchemist-buffer-initialize-modeline">
+    <div class="detail_header_links">
+      <a href="#alchemist-buffer-initialize-modeline" class="detail_link" title="Link to this function">
+       <span class="octicon octicon-link"></span>
+      </a>
+      <a class="to_top_link" href="#content" title="To the top of the page">
+       <span class="octicon octicon-chevron-up"></span>
+      </a>
+    </div>
+    <span class="detail_type">Function</span>
+    <span class="signature">
+      alchemist-buffer-initialize-modeline
+    </span>
+    <span class="arguments"></span>
+  </div>
+  <div class="docstring">
+    
+  </div>
+  
+<div class="view_source">Source: <a class="view_source_link" href="#">show</a></div>
+<div class="source">
+  <pre>
+    <code class="lisp">(defun alchemist-buffer-initialize-modeline ()
+  (setq mode-name
+         '(:eval (propertize "Elixir" 'face alchemist-buffer--mode-name-face))))
+</code>
+</pre>
+</div>
+</li>
+
+<li>
+  <div class="detail_header" id="alchemist-buffer-mode">
+    <div class="detail_header_links">
+      <a href="#alchemist-buffer-mode" class="detail_link" title="Link to this function">
+       <span class="octicon octicon-link"></span>
+      </a>
+      <a class="to_top_link" href="#content" title="To the top of the page">
+       <span class="octicon octicon-chevron-up"></span>
+      </a>
+    </div>
+    <span class="detail_type">Function</span>
+    <span class="signature">
+      alchemist-buffer-mode
+    </span>
+    <span class="arguments"></span>
+  </div>
+  <div class="docstring">
+    <p>Elixir compilation mode.<p><p><p><p>In addition to any hooks its parent mode `compilation-mode' might have run,<p><p>this mode runs the hook `alchemist-buffer-mode-hook', as the final step<p><p>during initialization.<p><p><p><p>key             binding<p><p>---             -------<p><p><p><p><p>
+  </div>
+  
+<div class="view_source">Source: <a class="view_source_link" href="#">show</a></div>
+<div class="source">
+  <pre>
+    <code class="lisp">(define-compilation-mode alchemist-buffer-mode "Elixir"
+  "Elixir compilation mode."
+  (progn
+    (font-lock-add-keywords nil
+                            '(("^Finished in .*$" . font-lock-string-face)
+                              ("^Elixir.*$" . font-lock-string-face)))
+    ;; Set any bound buffer name buffer-locally
+    (setq alchemist-buffer--buffer-name alchemist-buffer--buffer-name)
+    (set (make-local-variable 'kill-buffer-hook)
+         'alchemist-buffer--kill-any-orphan-proc)))
+</code>
+</pre>
+</div>
+</li>
+
+<li>
+  <div class="detail_header" id="alchemist-buffer-remove-dispensable-output-after-finish">
+    <div class="detail_header_links">
+      <a href="#alchemist-buffer-remove-dispensable-output-after-finish" class="detail_link" title="Link to this function">
+       <span class="octicon octicon-link"></span>
+      </a>
+      <a class="to_top_link" href="#content" title="To the top of the page">
+       <span class="octicon octicon-chevron-up"></span>
+      </a>
+    </div>
+    <span class="detail_type">Function</span>
+    <span class="signature">
+      alchemist-buffer-remove-dispensable-output-after-finish
+    </span>
+    <span class="arguments">buffer msg</span>
+  </div>
+  <div class="docstring">
+    
+  </div>
+  
+<div class="view_source">Source: <a class="view_source_link" href="#">show</a></div>
+<div class="source">
+  <pre>
+    <code class="lisp">(defun alchemist-buffer-remove-dispensable-output-after-finish (buffer msg)
+  (delete-matching-lines "\(Excluding tags\|Including tags\|Elixir exited\|Elixir finished\)" (point-min) (point-max)))
+</code>
+</pre>
+</div>
+</li>
+
+<li>
+  <div class="detail_header" id="alchemist-buffer-reset-modeline">
+    <div class="detail_header_links">
+      <a href="#alchemist-buffer-reset-modeline" class="detail_link" title="Link to this function">
+       <span class="octicon octicon-link"></span>
+      </a>
+      <a class="to_top_link" href="#content" title="To the top of the page">
+       <span class="octicon octicon-chevron-up"></span>
+      </a>
+    </div>
+    <span class="detail_type">Function</span>
+    <span class="signature">
+      alchemist-buffer-reset-modeline
+    </span>
+    <span class="arguments"></span>
+  </div>
+  <div class="docstring">
+    
+  </div>
+  
+<div class="view_source">Source: <a class="view_source_link" href="#">show</a></div>
+<div class="source">
+  <pre>
+    <code class="lisp">(defun alchemist-buffer-reset-modeline ()
+  (setq mode-name "Elixir"))
+</code>
+</pre>
+</div>
+</li>
+
+<li>
+  <div class="detail_header" id="alchemist-buffer-run">
+    <div class="detail_header_links">
+      <a href="#alchemist-buffer-run" class="detail_link" title="Link to this function">
+       <span class="octicon octicon-link"></span>
+      </a>
+      <a class="to_top_link" href="#content" title="To the top of the page">
+       <span class="octicon octicon-chevron-up"></span>
+      </a>
+    </div>
+    <span class="detail_type">Function</span>
+    <span class="signature">
+      alchemist-buffer-run
+    </span>
+    <span class="arguments">cmdlist buffer-name</span>
+  </div>
+  <div class="docstring">
+    <p>Run CMDLIST in `alchemist-buffer-mode'.<p><p>Returns the compilation buffer.<p><p>Argument BUFFER-NAME for the compilation.<p>
+  </div>
+  
+<div class="view_source">Source: <a class="view_source_link" href="#">show</a></div>
+<div class="source">
+  <pre>
+    <code class="lisp">(defun alchemist-buffer-run (cmdlist buffer-name)
+  "Run CMDLIST in `alchemist-buffer-mode'.
+Returns the compilation buffer.
+Argument BUFFER-NAME for the compilation."
+  (save-some-buffers (not compilation-ask-about-save) alchemist-buffer--save-buffers-predicate)
+  (let* ((alchemist-buffer--buffer-name buffer-name)
+         (compilation-filter-start (point-min)))
+    (with-current-buffer
+        (compilation-start (mapconcat 'shell-quote-argument cmdlist " ")
+                           'alchemist-buffer-mode
+                           (lambda (b) alchemist-buffer--buffer-name))
+      (setq-local compilation-error-regexp-alist-alist
+                  (cons alchemist-buffer--error-link-options compilation-error-regexp-alist-alist))
+      (setq-local compilation-error-regexp-alist (cons 'elixir compilation-error-regexp-alist))
+      (add-hook 'compilation-filter-hook 'alchemist-buffer--handle-compilation nil t)
+      (add-hook 'compilation-filter-hook 'alchemist-buffer--remove-dispensable-output nil t)
+      (add-to-list 'compilation-finish-functions 'alchemist-buffer-remove-dispensable-output-after-finish)
+      (when alchemist-buffer-status-modeline
+        (add-hook 'compilation-finish-functions 'alchemist-buffer--set-modeline-color nil t)))))
+</code>
+</pre>
+</div>
+</li>
+
+<li>
+  <div class="detail_header" id="alchemist-compile">
+    <div class="detail_header_links">
+      <a href="#alchemist-compile" class="detail_link" title="Link to this function">
+       <span class="octicon octicon-link"></span>
+      </a>
+      <a class="to_top_link" href="#content" title="To the top of the page">
+       <span class="octicon octicon-chevron-up"></span>
+      </a>
+    </div>
+    <span class="detail_type">Function</span>
+    <span class="signature">
+      alchemist-compile
+    </span>
+    <span class="arguments">cmdlist</span>
+  </div>
+  <div class="docstring">
+    <p>Compile CMDLIST with elixirc.<p>
+  </div>
+  
+<div class="view_source">Source: <a class="view_source_link" href="#">show</a></div>
+<div class="source">
+  <pre>
+    <code class="lisp">(defun alchemist-compile (cmdlist)
+  "Compile CMDLIST with elixirc."
+  (interactive (list (alchemist-compile--read-command alchemist-compile-command)))
+  (alchemist-buffer-run (alchemist-utils--build-runner-cmdlist cmdlist)
+                        alchemist-compile-buffer-name))
+</code>
+</pre>
+</div>
+</li>
+
+<li>
+  <div class="detail_header" id="alchemist-compile-file">
+    <div class="detail_header_links">
+      <a href="#alchemist-compile-file" class="detail_link" title="Link to this function">
+       <span class="octicon octicon-link"></span>
+      </a>
+      <a class="to_top_link" href="#content" title="To the top of the page">
+       <span class="octicon octicon-chevron-up"></span>
+      </a>
+    </div>
+    <span class="detail_type">Function</span>
+    <span class="signature">
+      alchemist-compile-file
+    </span>
+    <span class="arguments">filename</span>
+  </div>
+  <div class="docstring">
+    <p>Compile the given FILENAME.<p>
+  </div>
+  
+<div class="view_source">Source: <a class="view_source_link" href="#">show</a></div>
+<div class="source">
+  <pre>
+    <code class="lisp">(defun alchemist-compile-file (filename)
+  "Compile the given FILENAME."
+  (interactive "Felixirc: ")
+  (alchemist-compile--file (expand-file-name filename)))
+</code>
+</pre>
+</div>
+</li>
+
+<li>
+  <div class="detail_header" id="alchemist-compile-this-buffer">
+    <div class="detail_header_links">
+      <a href="#alchemist-compile-this-buffer" class="detail_link" title="Link to this function">
+       <span class="octicon octicon-link"></span>
+      </a>
+      <a class="to_top_link" href="#content" title="To the top of the page">
+       <span class="octicon octicon-chevron-up"></span>
+      </a>
+    </div>
+    <span class="detail_type">Function</span>
+    <span class="signature">
+      alchemist-compile-this-buffer
+    </span>
+    <span class="arguments"></span>
+  </div>
+  <div class="docstring">
+    <p>Compile the current buffer with elixirc.<p>
+  </div>
+  
+<div class="view_source">Source: <a class="view_source_link" href="#">show</a></div>
+<div class="source">
+  <pre>
+    <code class="lisp">(defun alchemist-compile-this-buffer ()
+  "Compile the current buffer with elixirc."
+  (interactive)
+  (alchemist-compile--file buffer-file-name))
+</code>
+</pre>
+</div>
+</li>
+
+<li>
+  <div class="detail_header" id="alchemist-complete">
+    <div class="detail_header_links">
+      <a href="#alchemist-complete" class="detail_link" title="Link to this function">
+       <span class="octicon octicon-link"></span>
+      </a>
+      <a class="to_top_link" href="#content" title="To the top of the page">
+       <span class="octicon octicon-chevron-up"></span>
+      </a>
+    </div>
+    <span class="detail_type">Function</span>
+    <span class="signature">
+      alchemist-complete
+    </span>
+    <span class="arguments">exp callback</span>
+  </div>
+  <div class="docstring">
+    
+  </div>
+  
+<div class="view_source">Source: <a class="view_source_link" href="#">show</a></div>
+<div class="source">
+  <pre>
+    <code class="lisp">(defun alchemist-complete (exp callback)
+  (let* ((buffer (get-buffer-create "alchemist-complete-buffer"))
+         (command (alchemist-complete--command exp))
+         (proc (start-process-shell-command "alchemist-complete-proc" buffer command)))
+    (alchemist-complete--sentinel proc callback)))
+</code>
+</pre>
+</div>
+</li>
+
+<li>
+  <div class="detail_header" id="alchemist-complete-candidates">
+    <div class="detail_header_links">
+      <a href="#alchemist-complete-candidates" class="detail_link" title="Link to this function">
+       <span class="octicon octicon-link"></span>
+      </a>
+      <a class="to_top_link" href="#content" title="To the top of the page">
+       <span class="octicon octicon-chevron-up"></span>
+      </a>
+    </div>
+    <span class="detail_type">Function</span>
+    <span class="signature">
+      alchemist-complete-candidates
+    </span>
+    <span class="arguments">exp callback</span>
+  </div>
+  <div class="docstring">
+    
+  </div>
+  
+<div class="view_source">Source: <a class="view_source_link" href="#">show</a></div>
+<div class="source">
+  <pre>
+    <code class="lisp">(defun alchemist-complete-candidates (exp callback)
+  (let* ((buffer (get-buffer-create "alchemist-complete-buffer"))
+         (command (alchemist-complete--command exp))
+         (proc (start-process-shell-command "alchemist-complete-proc" buffer command)))
+    (alchemist-complete--sentinel proc callback #'alchemist-complete--build-candidates)))
+</code>
+</pre>
+</div>
+</li>
+
+<li>
+  <div class="detail_header" id="alchemist-execute">
+    <div class="detail_header_links">
+      <a href="#alchemist-execute" class="detail_link" title="Link to this function">
+       <span class="octicon octicon-link"></span>
+      </a>
+      <a class="to_top_link" href="#content" title="To the top of the page">
+       <span class="octicon octicon-chevron-up"></span>
+      </a>
+    </div>
+    <span class="detail_type">Function</span>
+    <span class="signature">
+      alchemist-execute
+    </span>
+    <span class="arguments">cmdlist</span>
+  </div>
+  <div class="docstring">
+    <p>Run a elixir with CMDLIST.<p>
+  </div>
+  
+<div class="view_source">Source: <a class="view_source_link" href="#">show</a></div>
+<div class="source">
+  <pre>
+    <code class="lisp">(defun alchemist-execute (cmdlist)
+  "Run a elixir with CMDLIST."
+  (interactive (list (alchemist-execute--read-command alchemist-execute-command)))
+  (alchemist-buffer-run (alchemist-utils--build-runner-cmdlist cmdlist)
+                        alchemist-execute-buffer-name))
+</code>
+</pre>
+</div>
+</li>
+
+<li>
+  <div class="detail_header" id="alchemist-execute-file">
+    <div class="detail_header_links">
+      <a href="#alchemist-execute-file" class="detail_link" title="Link to this function">
+       <span class="octicon octicon-link"></span>
+      </a>
+      <a class="to_top_link" href="#content" title="To the top of the page">
+       <span class="octicon octicon-chevron-up"></span>
+      </a>
+    </div>
+    <span class="detail_type">Function</span>
+    <span class="signature">
+      alchemist-execute-file
+    </span>
+    <span class="arguments">filename</span>
+  </div>
+  <div class="docstring">
+    <p>Run elixir with the given FILENAME.<p>
+  </div>
+  
+<div class="view_source">Source: <a class="view_source_link" href="#">show</a></div>
+<div class="source">
+  <pre>
+    <code class="lisp">(defun alchemist-execute-file (filename)
+  "Run elixir with the given FILENAME."
+  (interactive "Felixir: ")
+  (alchemist-execute--file (expand-file-name filename)))
+</code>
+</pre>
+</div>
+</li>
+
+<li>
+  <div class="detail_header" id="alchemist-execute-this-buffer">
+    <div class="detail_header_links">
+      <a href="#alchemist-execute-this-buffer" class="detail_link" title="Link to this function">
+       <span class="octicon octicon-link"></span>
+      </a>
+      <a class="to_top_link" href="#content" title="To the top of the page">
+       <span class="octicon octicon-chevron-up"></span>
+      </a>
+    </div>
+    <span class="detail_type">Function</span>
+    <span class="signature">
+      alchemist-execute-this-buffer
+    </span>
+    <span class="arguments"></span>
+  </div>
+  <div class="docstring">
+    <p>Run the current buffer through elixir.<p>
+  </div>
+  
+<div class="view_source">Source: <a class="view_source_link" href="#">show</a></div>
+<div class="source">
+  <pre>
+    <code class="lisp">(defun alchemist-execute-this-buffer ()
+  "Run the current buffer through elixir."
+  (interactive)
+  (alchemist-execute--file buffer-file-name))
+</code>
+</pre>
+</div>
+</li>
+
+<li>
+  <div class="detail_header" id="alchemist-help">
+    <div class="detail_header_links">
+      <a href="#alchemist-help" class="detail_link" title="Link to this function">
+       <span class="octicon octicon-link"></span>
+      </a>
+      <a class="to_top_link" href="#content" title="To the top of the page">
+       <span class="octicon octicon-chevron-up"></span>
+      </a>
+    </div>
+    <span class="detail_type">Function</span>
+    <span class="signature">
+      alchemist-help
+    </span>
+    <span class="arguments">search</span>
+  </div>
+  <div class="docstring">
+    <p>Load Elixir documention for SEARCH.<p>
+  </div>
+  
+<div class="view_source">Source: <a class="view_source_link" href="#">show</a></div>
+<div class="source">
+  <pre>
+    <code class="lisp">(defun alchemist-help (search)
+  "Load Elixir documention for SEARCH."
+  (interactive "MElixir help: ")
+  (alchemist-help--execute search))
+</code>
+</pre>
+</div>
+</li>
+
+<li>
+  <div class="detail_header" id="alchemist-help-bad-search-output-p">
+    <div class="detail_header_links">
+      <a href="#alchemist-help-bad-search-output-p" class="detail_link" title="Link to this function">
+       <span class="octicon octicon-link"></span>
+      </a>
+      <a class="to_top_link" href="#content" title="To the top of the page">
+       <span class="octicon octicon-chevron-up"></span>
+      </a>
+    </div>
+    <span class="detail_type">Function</span>
+    <span class="signature">
+      alchemist-help-bad-search-output-p
+    </span>
+    <span class="arguments">string</span>
+  </div>
+  <div class="docstring">
+    
+  </div>
+  
+<div class="view_source">Source: <a class="view_source_link" href="#">show</a></div>
+<div class="source">
+  <pre>
+    <code class="lisp">(defun alchemist-help-bad-search-output-p (string)
+  (let ((match (or (string-match-p "No documentation for " string)
+                   (string-match-p "Invalid arguments for h helper" string)
+                   (string-match-p "** (TokenMissingError)" string)
+                   (string-match-p "** (SyntaxError)" string)
+                   (string-match-p "** (FunctionClauseError)" string)
+                   (string-match-p "** (CompileError)" string)
+                   (string-match-p "Could not load module" string))))
+    (if match
+        t
+      nil)))
+</code>
+</pre>
+</div>
+</li>
+
+<li>
+  <div class="detail_header" id="alchemist-help-history">
+    <div class="detail_header_links">
+      <a href="#alchemist-help-history" class="detail_link" title="Link to this function">
+       <span class="octicon octicon-link"></span>
+      </a>
+      <a class="to_top_link" href="#content" title="To the top of the page">
+       <span class="octicon octicon-chevron-up"></span>
+      </a>
+    </div>
+    <span class="detail_type">Function</span>
+    <span class="signature">
+      alchemist-help-history
+    </span>
+    <span class="arguments">search</span>
+  </div>
+  <div class="docstring">
+    <p>Load Elixir from the documention history for SEARCH.<p>
+  </div>
+  
+<div class="view_source">Source: <a class="view_source_link" href="#">show</a></div>
+<div class="source">
+  <pre>
+    <code class="lisp">(defun alchemist-help-history (search)
+  "Load Elixir from the documention history for SEARCH."
+  (interactive
+   (list
+    (completing-read "Elixir help history: " alchemist-help-search-history nil nil "")))
+  (alchemist-help--execute search))
+</code>
+</pre>
+</div>
+</li>
+
+<li>
+  <div class="detail_header" id="alchemist-help-minor-mode">
+    <div class="detail_header_links">
+      <a href="#alchemist-help-minor-mode" class="detail_link" title="Link to this function">
+       <span class="octicon octicon-link"></span>
+      </a>
+      <a class="to_top_link" href="#content" title="To the top of the page">
+       <span class="octicon octicon-chevron-up"></span>
+      </a>
+    </div>
+    <span class="detail_type">Function</span>
+    <span class="signature">
+      alchemist-help-minor-mode
+    </span>
+    <span class="arguments">&optional arg</span>
+  </div>
+  <div class="docstring">
+    <p>Minor mode for displaying elixir help.<p>
+  </div>
+  
+<div class="view_source">Source: <a class="view_source_link" href="#">show</a></div>
+<div class="source">
+  <pre>
+    <code class="lisp">(define-minor-mode alchemist-help-minor-mode
+  "Minor mode for displaying elixir help."
+  :group 'alchemist-help
+  :keymap '(("q" . quit-window)
+            ("e" . alchemist-help-search-at-point)
+            ("m" . alchemist-help-search-marked-region)
+            ("s" . alchemist-help)
+            ("n" . alchemist-help-next-search)
+            ("p" . alchemist-help-previous-search)
+            ("?" . alchemist-help-minor-mode-key-binding-summary)))
+</code>
+</pre>
+</div>
+</li>
+
+<li>
+  <div class="detail_header" id="alchemist-help-minor-mode-key-binding-summary">
+    <div class="detail_header_links">
+      <a href="#alchemist-help-minor-mode-key-binding-summary" class="detail_link" title="Link to this function">
+       <span class="octicon octicon-link"></span>
+      </a>
+      <a class="to_top_link" href="#content" title="To the top of the page">
+       <span class="octicon octicon-chevron-up"></span>
+      </a>
+    </div>
+    <span class="detail_type">Function</span>
+    <span class="signature">
+      alchemist-help-minor-mode-key-binding-summary
+    </span>
+    <span class="arguments"></span>
+  </div>
+  <div class="docstring">
+    
+  </div>
+  
+<div class="view_source">Source: <a class="view_source_link" href="#">show</a></div>
+<div class="source">
+  <pre>
+    <code class="lisp">(defun alchemist-help-minor-mode-key-binding-summary ()
+  (interactive)
+  (message
+   (concat "[" (propertize "q" 'face 'alchemist-help--key-face)
+           "]-quit ["
+           (propertize "e" 'face 'alchemist-help--key-face)
+           "]-search-at-point ["
+           (propertize "m" 'face 'alchemist-help--key-face)
+           "]-search-marked-region ["
+           (propertize "n" 'face 'alchemist-help--key-face)
+           "]-next-search ["
+           (propertize "p" 'face 'alchemist-help--key-face)
+           "]-previous-search ["
+           (propertize "s" 'face 'alchemist-help--key-face)
+           "]-search ["
+           (propertize "?" 'face 'alchemist-help--key-face)
+           "]-keys")))
+</code>
+</pre>
+</div>
+</li>
+
+<li>
+  <div class="detail_header" id="alchemist-help-module-sexp-at-point">
+    <div class="detail_header_links">
+      <a href="#alchemist-help-module-sexp-at-point" class="detail_link" title="Link to this function">
+       <span class="octicon octicon-link"></span>
+      </a>
+      <a class="to_top_link" href="#content" title="To the top of the page">
+       <span class="octicon octicon-chevron-up"></span>
+      </a>
+    </div>
+    <span class="detail_type">Function</span>
+    <span class="signature">
+      alchemist-help-module-sexp-at-point
+    </span>
+    <span class="arguments"></span>
+  </div>
+  <div class="docstring">
+    <p>Search through `alchemist-help' with the expression under the cursor.<p>
+  </div>
+  
+<div class="view_source">Source: <a class="view_source_link" href="#">show</a></div>
+<div class="source">
+  <pre>
+    <code class="lisp">(defun alchemist-help-search-at-point ()
+  "Search through `alchemist-help' with the expression under the cursor."
+  (interactive)
+  (alchemist-help--execute (alchemist-help--exp-at-point)))
+</code>
+</pre>
+</div>
+</li>
+
+<li>
+  <div class="detail_header" id="alchemist-help-next-search">
+    <div class="detail_header_links">
+      <a href="#alchemist-help-next-search" class="detail_link" title="Link to this function">
+       <span class="octicon octicon-link"></span>
+      </a>
+      <a class="to_top_link" href="#content" title="To the top of the page">
+       <span class="octicon octicon-chevron-up"></span>
+      </a>
+    </div>
+    <span class="detail_type">Function</span>
+    <span class="signature">
+      alchemist-help-next-search
+    </span>
+    <span class="arguments"></span>
+  </div>
+  <div class="docstring">
+    <p>Switches to the next search in the history.<p>
+  </div>
+  
+<div class="view_source">Source: <a class="view_source_link" href="#">show</a></div>
+<div class="source">
+  <pre>
+    <code class="lisp">(defun alchemist-help-next-search ()
+  "Switches to the next search in the history."
+  (interactive)
+  (let ((current-position (cl-position alchemist-help-current-search-text alchemist-help-search-history))
+        (next-position (- alchemist-help-search-history-index 1)))
+    (unless (< next-position 0)
+      (setq alchemist-help-search-history-index next-position)
+      (alchemist-help (nth next-position alchemist-help-search-history)))))
+</code>
+</pre>
+</div>
+</li>
+
+<li>
+  <div class="detail_header" id="alchemist-help-previous-search">
+    <div class="detail_header_links">
+      <a href="#alchemist-help-previous-search" class="detail_link" title="Link to this function">
+       <span class="octicon octicon-link"></span>
+      </a>
+      <a class="to_top_link" href="#content" title="To the top of the page">
+       <span class="octicon octicon-chevron-up"></span>
+      </a>
+    </div>
+    <span class="detail_type">Function</span>
+    <span class="signature">
+      alchemist-help-previous-search
+    </span>
+    <span class="arguments"></span>
+  </div>
+  <div class="docstring">
+    <p>Switches to the previous search in the history.<p>
+  </div>
+  
+<div class="view_source">Source: <a class="view_source_link" href="#">show</a></div>
+<div class="source">
+  <pre>
+    <code class="lisp">(defun alchemist-help-previous-search ()
+  "Switches to the previous search in the history."
+  (interactive)
+  (let ((current-position (cl-position alchemist-help-current-search-text alchemist-help-search-history))
+        (next-position (+ alchemist-help-search-history-index 1)))
+    (unless (> next-position (- (length alchemist-help-search-history) 1))
+      (setq alchemist-help-search-history-index next-position)
+      (alchemist-help (nth next-position alchemist-help-search-history)))))
+</code>
+</pre>
+</div>
+</li>
+
+<li>
+  <div class="detail_header" id="alchemist-help-search-at-point">
+    <div class="detail_header_links">
+      <a href="#alchemist-help-search-at-point" class="detail_link" title="Link to this function">
+       <span class="octicon octicon-link"></span>
+      </a>
+      <a class="to_top_link" href="#content" title="To the top of the page">
+       <span class="octicon octicon-chevron-up"></span>
+      </a>
+    </div>
+    <span class="detail_type">Function</span>
+    <span class="signature">
+      alchemist-help-search-at-point
+    </span>
+    <span class="arguments"></span>
+  </div>
+  <div class="docstring">
+    <p>Search through `alchemist-help' with the expression under the cursor.<p>
+  </div>
+  
+<div class="view_source">Source: <a class="view_source_link" href="#">show</a></div>
+<div class="source">
+  <pre>
+    <code class="lisp">(defun alchemist-help-search-at-point ()
+  "Search through `alchemist-help' with the expression under the cursor."
+  (interactive)
+  (alchemist-help--execute (alchemist-help--exp-at-point)))
+</code>
+</pre>
+</div>
+</li>
+
+<li>
+  <div class="detail_header" id="alchemist-help-search-marked-region">
+    <div class="detail_header_links">
+      <a href="#alchemist-help-search-marked-region" class="detail_link" title="Link to this function">
+       <span class="octicon octicon-link"></span>
+      </a>
+      <a class="to_top_link" href="#content" title="To the top of the page">
+       <span class="octicon octicon-chevron-up"></span>
+      </a>
+    </div>
+    <span class="detail_type">Function</span>
+    <span class="signature">
+      alchemist-help-search-marked-region
+    </span>
+    <span class="arguments">begin end</span>
+  </div>
+  <div class="docstring">
+    <p>Run `alchemist-help' with the marked region.<p><p>Argument BEGIN where the mark starts.<p><p>Argument END where the mark ends.<p>
+  </div>
+  
+<div class="view_source">Source: <a class="view_source_link" href="#">show</a></div>
+<div class="source">
+  <pre>
+    <code class="lisp">(defun alchemist-help-search-marked-region (begin end)
+  "Run `alchemist-help' with the marked region.
+Argument BEGIN where the mark starts.
+Argument END where the mark ends."
+  (interactive "r")
+  (let ((region (filter-buffer-substring begin end)))
+    (alchemist-help--execute region)))
+</code>
+</pre>
+</div>
+</li>
+
+<li>
+  <div class="detail_header" id="alchemist-help-sexp-at-point">
+    <div class="detail_header_links">
+      <a href="#alchemist-help-sexp-at-point" class="detail_link" title="Link to this function">
+       <span class="octicon octicon-link"></span>
+      </a>
+      <a class="to_top_link" href="#content" title="To the top of the page">
+       <span class="octicon octicon-chevron-up"></span>
+      </a>
+    </div>
+    <span class="detail_type">Function</span>
+    <span class="signature">
+      alchemist-help-sexp-at-point
+    </span>
+    <span class="arguments"></span>
+  </div>
+  <div class="docstring">
+    <p>Search through `alchemist-help' with the expression under the cursor.<p>
+  </div>
+  
+<div class="view_source">Source: <a class="view_source_link" href="#">show</a></div>
+<div class="source">
+  <pre>
+    <code class="lisp">(defun alchemist-help-search-at-point ()
+  "Search through `alchemist-help' with the expression under the cursor."
+  (interactive)
+  (alchemist-help--execute (alchemist-help--exp-at-point)))
+</code>
+</pre>
+</div>
+</li>
+
+<li>
+  <div class="detail_header" id="alchemist-mix-compile">
+    <div class="detail_header_links">
+      <a href="#alchemist-mix-compile" class="detail_link" title="Link to this function">
+       <span class="octicon octicon-link"></span>
+      </a>
+      <a class="to_top_link" href="#content" title="To the top of the page">
+       <span class="octicon octicon-chevron-up"></span>
+      </a>
+    </div>
+    <span class="detail_type">Function</span>
+    <span class="signature">
+      alchemist-mix-compile
+    </span>
+    <span class="arguments">command</span>
+  </div>
+  <div class="docstring">
+    <p>Compile the whole elixir project.<p>
+  </div>
+  
+<div class="view_source">Source: <a class="view_source_link" href="#">show</a></div>
+<div class="source">
+  <pre>
+    <code class="lisp">(defun alchemist-mix-compile (command)
+  "Compile the whole elixir project."
+  (interactive "Mmix compile: ")
+  (alchemist-mix-execute (list alchemist-mix-command "compile" command)))
+</code>
+</pre>
+</div>
+</li>
+
+<li>
+  <div class="detail_header" id="alchemist-mix-deps-with-prompt">
+    <div class="detail_header_links">
+      <a href="#alchemist-mix-deps-with-prompt" class="detail_link" title="Link to this function">
+       <span class="octicon octicon-link"></span>
+      </a>
+      <a class="to_top_link" href="#content" title="To the top of the page">
+       <span class="octicon octicon-chevron-up"></span>
+      </a>
+    </div>
+    <span class="detail_type">Function</span>
+    <span class="signature">
+      alchemist-mix-deps-with-prompt
+    </span>
+    <span class="arguments">command</span>
+  </div>
+  <div class="docstring">
+    <p>Prompt for mix deps commands.<p>
+  </div>
+  
+<div class="view_source">Source: <a class="view_source_link" href="#">show</a></div>
+<div class="source">
+  <pre>
+    <code class="lisp">(defun alchemist-mix-deps-with-prompt (command)
+  "Prompt for mix deps commands."
+  (interactive
+   (list (alchemist-mix--completing-read "mix deps: " alchemist-mix--deps-commands)))
+  (alchemist-mix-execute (list alchemist-mix-command command)))
+</code>
+</pre>
+</div>
+</li>
+
+<li>
+  <div class="detail_header" id="alchemist-mix-display-mix-buffer">
+    <div class="detail_header_links">
+      <a href="#alchemist-mix-display-mix-buffer" class="detail_link" title="Link to this function">
+       <span class="octicon octicon-link"></span>
+      </a>
+      <a class="to_top_link" href="#content" title="To the top of the page">
+       <span class="octicon octicon-chevron-up"></span>
+      </a>
+    </div>
+    <span class="detail_type">Function</span>
+    <span class="signature">
+      alchemist-mix-display-mix-buffer
+    </span>
+    <span class="arguments"></span>
+  </div>
+  <div class="docstring">
+    <p>Display the mix buffer when exists.<p>
+  </div>
+  
+<div class="view_source">Source: <a class="view_source_link" href="#">show</a></div>
+<div class="source">
+  <pre>
+    <code class="lisp">(defun alchemist-mix-display-mix-buffer ()
+  "Display the mix buffer when exists."
+  (interactive)
+  (when (get-buffer alchemist-mix-buffer-name)
+    (display-buffer alchemist-mix-buffer-name)))
+</code>
+</pre>
+</div>
+</li>
+
+<li>
+  <div class="detail_header" id="alchemist-mix-execute">
+    <div class="detail_header_links">
+      <a href="#alchemist-mix-execute" class="detail_link" title="Link to this function">
+       <span class="octicon octicon-link"></span>
+      </a>
+      <a class="to_top_link" href="#content" title="To the top of the page">
+       <span class="octicon octicon-chevron-up"></span>
+      </a>
+    </div>
+    <span class="detail_type">Function</span>
+    <span class="signature">
+      alchemist-mix-execute
+    </span>
+    <span class="arguments">cmdlist</span>
+  </div>
+  <div class="docstring">
+    <p>Run a mix command.<p>
+  </div>
+  
+<div class="view_source">Source: <a class="view_source_link" href="#">show</a></div>
+<div class="source">
+  <pre>
+    <code class="lisp">(defun alchemist-mix-execute (cmdlist)
+  "Run a mix command."
+  (interactive "Mmix: ")
+  (let ((old-directory default-directory))
+    (alchemist-project--establish-root-directory)
+    (alchemist-buffer-run (alchemist-utils--build-runner-cmdlist cmdlist)
+                          alchemist-mix-buffer-name)
+    (cd old-directory)))
+</code>
+</pre>
+</div>
+</li>
+
+<li>
+  <div class="detail_header" id="alchemist-mix-help">
+    <div class="detail_header_links">
+      <a href="#alchemist-mix-help" class="detail_link" title="Link to this function">
+       <span class="octicon octicon-link"></span>
+      </a>
+      <a class="to_top_link" href="#content" title="To the top of the page">
+       <span class="octicon octicon-chevron-up"></span>
+      </a>
+    </div>
+    <span class="detail_type">Function</span>
+    <span class="signature">
+      alchemist-mix-help
+    </span>
+    <span class="arguments">command</span>
+  </div>
+  <div class="docstring">
+    <p>Show help output for a specific mix command.<p>
+  </div>
+  
+<div class="view_source">Source: <a class="view_source_link" href="#">show</a></div>
+<div class="source">
+  <pre>
+    <code class="lisp">(defun alchemist-mix-help (command)
+  "Show help output for a specific mix command."
+  (interactive "Mmix help: ")
+  (alchemist-mix-execute (list alchemist-mix-command "help" command)))
+</code>
+</pre>
+</div>
+</li>
+
+<li>
+  <div class="detail_header" id="alchemist-mix-hex-search">
+    <div class="detail_header_links">
+      <a href="#alchemist-mix-hex-search" class="detail_link" title="Link to this function">
+       <span class="octicon octicon-link"></span>
+      </a>
+      <a class="to_top_link" href="#content" title="To the top of the page">
+       <span class="octicon octicon-chevron-up"></span>
+      </a>
+    </div>
+    <span class="detail_type">Function</span>
+    <span class="signature">
+      alchemist-mix-hex-search
+    </span>
+    <span class="arguments">command</span>
+  </div>
+  <div class="docstring">
+    <p>Display packages matching the given search query.<p>
+  </div>
+  
+<div class="view_source">Source: <a class="view_source_link" href="#">show</a></div>
+<div class="source">
+  <pre>
+    <code class="lisp">(defun alchemist-mix-hex-search (command)
+  "Display packages matching the given search query."
+  (interactive "Mmix hex.search: ")
+  (alchemist-mix-execute (list alchemist-mix-command "hex.search" command)))
+</code>
+</pre>
+</div>
+</li>
+
+<li>
+  <div class="detail_header" id="alchemist-mix-local-install">
+    <div class="detail_header_links">
+      <a href="#alchemist-mix-local-install" class="detail_link" title="Link to this function">
+       <span class="octicon octicon-link"></span>
+      </a>
+      <a class="to_top_link" href="#content" title="To the top of the page">
+       <span class="octicon octicon-chevron-up"></span>
+      </a>
+    </div>
+    <span class="detail_type">Function</span>
+    <span class="signature">
+      alchemist-mix-local-install
+    </span>
+    <span class="arguments">path-or-url</span>
+  </div>
+  <div class="docstring">
+    <p>Prompt for mix local.install PATH-OR-URL.<p>
+  </div>
+  
+<div class="view_source">Source: <a class="view_source_link" href="#">show</a></div>
+<div class="source">
+  <pre>
+    <code class="lisp">(defun alchemist-mix-local-install (path-or-url)
+  "Prompt for mix local.install PATH-OR-URL."
+  (interactive
+   (list (completing-read "mix local.install FORMAT: "
+                          alchemist-mix--local-install-option-types
+                          nil t nil nil (car alchemist-mix--local-install-option-types))))
+  (if (string= path-or-url (car alchemist-mix--local-install-option-types))
+      (call-interactively 'alchemist-mix-local-install-with-path)
+    (call-interactively 'alchemist-mix-local-install-with-url)))
+</code>
+</pre>
+</div>
+</li>
+
+<li>
+  <div class="detail_header" id="alchemist-mix-local-install-with-path">
+    <div class="detail_header_links">
+      <a href="#alchemist-mix-local-install-with-path" class="detail_link" title="Link to this function">
+       <span class="octicon octicon-link"></span>
+      </a>
+      <a class="to_top_link" href="#content" title="To the top of the page">
+       <span class="octicon octicon-chevron-up"></span>
+      </a>
+    </div>
+    <span class="detail_type">Function</span>
+    <span class="signature">
+      alchemist-mix-local-install-with-path
+    </span>
+    <span class="arguments">path</span>
+  </div>
+  <div class="docstring">
+    <p>Runs local.install and prompt for a PATH as argument.<p>
+  </div>
+  
+<div class="view_source">Source: <a class="view_source_link" href="#">show</a></div>
+<div class="source">
+  <pre>
+    <code class="lisp">(defun alchemist-mix-local-install-with-path (path)
+  "Runs local.install and prompt for a PATH as argument."
+  (interactive "fmix local.install PATH: ")
+  (alchemist-mix-execute (list alchemist-mix-command "local.install" path)))
+</code>
+</pre>
+</div>
+</li>
+
+<li>
+  <div class="detail_header" id="alchemist-mix-local-install-with-url">
+    <div class="detail_header_links">
+      <a href="#alchemist-mix-local-install-with-url" class="detail_link" title="Link to this function">
+       <span class="octicon octicon-link"></span>
+      </a>
+      <a class="to_top_link" href="#content" title="To the top of the page">
+       <span class="octicon octicon-chevron-up"></span>
+      </a>
+    </div>
+    <span class="detail_type">Function</span>
+    <span class="signature">
+      alchemist-mix-local-install-with-url
+    </span>
+    <span class="arguments">url</span>
+  </div>
+  <div class="docstring">
+    <p>Runs local.install and prompt for a URL as argument.<p>
+  </div>
+  
+<div class="view_source">Source: <a class="view_source_link" href="#">show</a></div>
+<div class="source">
+  <pre>
+    <code class="lisp">(defun alchemist-mix-local-install-with-url (url)
+  "Runs local.install and prompt for a URL as argument."
+  (interactive "Mmix local.install URL: ")
+  (alchemist-mix-execute (list alchemist-mix-command "local.install" url)))
+</code>
+</pre>
+</div>
+</li>
+
+<li>
+  <div class="detail_header" id="alchemist-mix-local-with-prompt">
+    <div class="detail_header_links">
+      <a href="#alchemist-mix-local-with-prompt" class="detail_link" title="Link to this function">
+       <span class="octicon octicon-link"></span>
+      </a>
+      <a class="to_top_link" href="#content" title="To the top of the page">
+       <span class="octicon octicon-chevron-up"></span>
+      </a>
+    </div>
+    <span class="detail_type">Function</span>
+    <span class="signature">
+      alchemist-mix-local-with-prompt
+    </span>
+    <span class="arguments">command</span>
+  </div>
+  <div class="docstring">
+    <p>Prompt for mix local commands.<p>
+  </div>
+  
+<div class="view_source">Source: <a class="view_source_link" href="#">show</a></div>
+<div class="source">
+  <pre>
+    <code class="lisp">(defun alchemist-mix-local-with-prompt (command)
+  "Prompt for mix local commands."
+  (interactive
+   (list (alchemist-mix--completing-read "mix local: " alchemist-mix--local-commands)))
+  (if (string= command "local.install")
+      (call-interactively 'alchemist-mix-local-install)
+    (alchemist-mix-execute (list alchemist-mix-command command))))
+</code>
+</pre>
+</div>
+</li>
+
+<li>
+  <div class="detail_header" id="alchemist-mix-new">
+    <div class="detail_header_links">
+      <a href="#alchemist-mix-new" class="detail_link" title="Link to this function">
+       <span class="octicon octicon-link"></span>
+      </a>
+      <a class="to_top_link" href="#content" title="To the top of the page">
+       <span class="octicon octicon-chevron-up"></span>
+      </a>
+    </div>
+    <span class="detail_type">Function</span>
+    <span class="signature">
+      alchemist-mix-new
+    </span>
+    <span class="arguments">name</span>
+  </div>
+  <div class="docstring">
+    <p>Create a new elixir project named by NAME.<p>
+  </div>
+  
+<div class="view_source">Source: <a class="view_source_link" href="#">show</a></div>
+<div class="source">
+  <pre>
+    <code class="lisp">(defun alchemist-mix-new (name)
+  "Create a new elixir project named by NAME."
+  (interactive "Gmix new: ")
+  (alchemist-mix-execute (list alchemist-mix-command "new" (expand-file-name name))))
+</code>
+</pre>
+</div>
+</li>
+
+<li>
+  <div class="detail_header" id="alchemist-mix-run">
+    <div class="detail_header_links">
+      <a href="#alchemist-mix-run" class="detail_link" title="Link to this function">
+       <span class="octicon octicon-link"></span>
+      </a>
+      <a class="to_top_link" href="#content" title="To the top of the page">
+       <span class="octicon octicon-chevron-up"></span>
+      </a>
+    </div>
+    <span class="detail_type">Function</span>
+    <span class="signature">
+      alchemist-mix-run
+    </span>
+    <span class="arguments">command</span>
+  </div>
+  <div class="docstring">
+    <p>Runs the given file or expression in the context of the application.<p>
+  </div>
+  
+<div class="view_source">Source: <a class="view_source_link" href="#">show</a></div>
+<div class="source">
+  <pre>
+    <code class="lisp">(defun alchemist-mix-run (command)
+  "Runs the given file or expression in the context of the application."
+  (interactive "Mmix run: ")
+  (alchemist-mix-execute (list alchemist-mix-command "run" command)))
+</code>
+</pre>
+</div>
+</li>
+
+<li>
+  <div class="detail_header" id="alchemist-mix-test">
+    <div class="detail_header_links">
+      <a href="#alchemist-mix-test" class="detail_link" title="Link to this function">
+       <span class="octicon octicon-link"></span>
+      </a>
+      <a class="to_top_link" href="#content" title="To the top of the page">
+       <span class="octicon octicon-chevron-up"></span>
+      </a>
+    </div>
+    <span class="detail_type">Function</span>
+    <span class="signature">
+      alchemist-mix-test
+    </span>
+    <span class="arguments"></span>
+  </div>
+  <div class="docstring">
+    <p>Run the whole elixir test suite.<p>
+  </div>
+  
+<div class="view_source">Source: <a class="view_source_link" href="#">show</a></div>
+<div class="source">
+  <pre>
+    <code class="lisp">(defun alchemist-mix-test ()
+  "Run the whole elixir test suite."
+  (interactive)
+  (alchemist-mix-execute (list alchemist-mix-command "test")))
+</code>
+</pre>
+</div>
+</li>
+
+<li>
+  <div class="detail_header" id="alchemist-mix-test-at-point">
+    <div class="detail_header_links">
+      <a href="#alchemist-mix-test-at-point" class="detail_link" title="Link to this function">
+       <span class="octicon octicon-link"></span>
+      </a>
+      <a class="to_top_link" href="#content" title="To the top of the page">
+       <span class="octicon octicon-chevron-up"></span>
+      </a>
+    </div>
+    <span class="detail_type">Function</span>
+    <span class="signature">
+      alchemist-mix-test-at-point
+    </span>
+    <span class="arguments"></span>
+  </div>
+  <div class="docstring">
+    <p>Run the test at point.<p>
+  </div>
+  
+<div class="view_source">Source: <a class="view_source_link" href="#">show</a></div>
+<div class="source">
+  <pre>
+    <code class="lisp">(defun alchemist-mix-test-at-point ()
+  "Run the test at point."
+  (interactive)
+  (let* ((line (line-number-at-pos (point)))
+         (file-and-line (format "%s:%s" buffer-file-name line)))
+    (alchemist-mix-execute (list alchemist-mix-command "test" file-and-line))))
+</code>
+</pre>
+</div>
+</li>
+
+<li>
+  <div class="detail_header" id="alchemist-mix-test-file">
+    <div class="detail_header_links">
+      <a href="#alchemist-mix-test-file" class="detail_link" title="Link to this function">
+       <span class="octicon octicon-link"></span>
+      </a>
+      <a class="to_top_link" href="#content" title="To the top of the page">
+       <span class="octicon octicon-chevron-up"></span>
+      </a>
+    </div>
+    <span class="detail_type">Function</span>
+    <span class="signature">
+      alchemist-mix-test-file
+    </span>
+    <span class="arguments">filename</span>
+  </div>
+  <div class="docstring">
+    <p>Run `alchemist-mix--test-file' with the FILENAME.<p>
+  </div>
+  
+<div class="view_source">Source: <a class="view_source_link" href="#">show</a></div>
+<div class="source">
+  <pre>
+    <code class="lisp">(defun alchemist-mix-test-file (filename)
+  "Run `alchemist-mix--test-file' with the FILENAME."
+  (interactive "Fmix test: ")
+  (alchemist-mix--test-file (expand-file-name filename)))
+</code>
+</pre>
+</div>
+</li>
+
+<li>
+  <div class="detail_header" id="alchemist-mix-test-this-buffer">
+    <div class="detail_header_links">
+      <a href="#alchemist-mix-test-this-buffer" class="detail_link" title="Link to this function">
+       <span class="octicon octicon-link"></span>
+      </a>
+      <a class="to_top_link" href="#content" title="To the top of the page">
+       <span class="octicon octicon-chevron-up"></span>
+      </a>
+    </div>
+    <span class="detail_type">Function</span>
+    <span class="signature">
+      alchemist-mix-test-this-buffer
+    </span>
+    <span class="arguments"></span>
+  </div>
+  <div class="docstring">
+    <p>Run the current buffer through mix test.<p>
+  </div>
+  
+<div class="view_source">Source: <a class="view_source_link" href="#">show</a></div>
+<div class="source">
+  <pre>
+    <code class="lisp">(defun alchemist-mix-test-this-buffer ()
+  "Run the current buffer through mix test."
+  (interactive)
+  (alchemist-mix--test-file buffer-file-name))
+</code>
+</pre>
+</div>
+</li>
+
+<li>
+  <div class="detail_header" id="alchemist-mode">
+    <div class="detail_header_links">
+      <a href="#alchemist-mode" class="detail_link" title="Link to this function">
+       <span class="octicon octicon-link"></span>
+      </a>
+      <a class="to_top_link" href="#content" title="To the top of the page">
+       <span class="octicon octicon-chevron-up"></span>
+      </a>
+    </div>
+    <span class="detail_type">Function</span>
+    <span class="signature">
+      alchemist-mode
+    </span>
+    <span class="arguments">&optional arg</span>
+  </div>
+  <div class="docstring">
+    <p>Toggle alchemist mode.<p><p><p><p>Key bindings:<p><p>key             binding<p><p>---             -------<p><p><p><p>C-c		Prefix Command<p><p><p><p>C-c a		Prefix Command<p><p><p><p>C-c a c		Prefix Command<p><p>C-c a e		Prefix Command<p><p>C-c a h		Prefix Command<p><p>C-c a m		Prefix Command<p><p>C-c a t		alchemist-mix-test<p><p><p><p>C-c a h e	alchemist-help-search-at-point<p><p>C-c a h h	alchemist-help<p><p>C-c a h m	alchemist-help-search-marked-region<p><p><p><p>C-c a e b	alchemist-execute-this-buffer<p><p>C-c a e e	alchemist-execute<p><p>C-c a e f	alchemist-execute-file<p><p><p><p>C-c a c b	alchemist-compile-this-buffer<p><p>C-c a c c	alchemist-compile<p><p>C-c a c f	alchemist-compile-file<p><p><p><p>C-c a m t	Prefix Command<p><p><p><p>C-c a m t .	alchemist-mix-test-at-point<p><p>C-c a m t b	alchemist-mix-test-this-buffer<p><p>C-c a m t f	alchemist-mix-test-file<p><p><p><p><p>
+  </div>
+  
+<div class="view_source">Source: <a class="view_source_link" href="#">show</a></div>
+<div class="source">
+  <pre>
+    <code class="lisp">(define-minor-mode alchemist-mode
+  "Toggle alchemist mode.
+
+Key bindings:
+\{alchemist-mode-map}"
+  nil
+  ;; The indicator for the mode line.
+  " alchemist"
+  :group 'alchemist
+  :global nil
+  :keymap 'alchemist-mode-map
+  (cond (alchemist-mode
+         (alchemist-buffer-initialize-modeline))
+        (t
+         (alchemist-buffer-reset-modeline))))
+</code>
+</pre>
+</div>
+</li>
+
+<li>
+  <div class="detail_header" id="alchemist-mode-hook">
+    <div class="detail_header_links">
+      <a href="#alchemist-mode-hook" class="detail_link" title="Link to this function">
+       <span class="octicon octicon-link"></span>
+      </a>
+      <a class="to_top_link" href="#content" title="To the top of the page">
+       <span class="octicon octicon-chevron-up"></span>
+      </a>
+    </div>
+    <span class="detail_type">Function</span>
+    <span class="signature">
+      alchemist-mode-hook
+    </span>
+    <span class="arguments"></span>
+  </div>
+  <div class="docstring">
+    <p>Hook which enables `alchemist-mode'<p>
+  </div>
+  
+<div class="view_source">Source: <a class="view_source_link" href="#">show</a></div>
+<div class="source">
+  <pre>
+    <code class="lisp">(defun alchemist-mode-hook ()
+  "Hook which enables `alchemist-mode'"
+  (alchemist-mode 1))
+</code>
+</pre>
+</div>
+</li>
+
+<li>
+  <div class="detail_header" id="alchemist-project-config">
+    <div class="detail_header_links">
+      <a href="#alchemist-project-config" class="detail_link" title="Link to this function">
+       <span class="octicon octicon-link"></span>
+      </a>
+      <a class="to_top_link" href="#content" title="To the top of the page">
+       <span class="octicon octicon-chevron-up"></span>
+      </a>
+    </div>
+    <span class="detail_type">Function</span>
+    <span class="signature">
+      alchemist-project-config
+    </span>
+    <span class="arguments"></span>
+  </div>
+  <div class="docstring">
+    <p>Return the current Elixir project configs.<p>
+  </div>
+  
+<div class="view_source">Source: <a class="view_source_link" href="#">show</a></div>
+<div class="source">
+  <pre>
+    <code class="lisp">(defun alchemist-project-config ()
+  "Return the current Elixir project configs."
+  (let* ((json-object-type 'hash-table)
+         (config (if (alchemist-project--config-exists-p)
+                     (json-read-from-string
+                      (with-temp-buffer
+                        (insert-file-contents (alchemist-project--config-filepath))
+                        (buffer-string)))
+                   (make-hash-table :test 'equal))))
+    config))
+</code>
+</pre>
+</div>
+</li>
+
+<li>
+  <div class="detail_header" id="alchemist-project-name">
+    <div class="detail_header_links">
+      <a href="#alchemist-project-name" class="detail_link" title="Link to this function">
+       <span class="octicon octicon-link"></span>
+      </a>
+      <a class="to_top_link" href="#content" title="To the top of the page">
+       <span class="octicon octicon-chevron-up"></span>
+      </a>
+    </div>
+    <span class="detail_type">Function</span>
+    <span class="signature">
+      alchemist-project-name
+    </span>
+    <span class="arguments"></span>
+  </div>
+  <div class="docstring">
+    <p>Return the name of the current Elixir project.<p>
+  </div>
+  
+<div class="view_source">Source: <a class="view_source_link" href="#">show</a></div>
+<div class="source">
+  <pre>
+    <code class="lisp">(defun alchemist-project-name ()
+  "Return the name of the current Elixir project."
+  (if (alchemist-project-p)
+      (car (cdr (reverse (split-string (alchemist-project-root) "/"))))
+    ""))
+</code>
+</pre>
+</div>
+</li>
+
+<li>
+  <div class="detail_header" id="alchemist-project-p">
+    <div class="detail_header_links">
+      <a href="#alchemist-project-p" class="detail_link" title="Link to this function">
+       <span class="octicon octicon-link"></span>
+      </a>
+      <a class="to_top_link" href="#content" title="To the top of the page">
+       <span class="octicon octicon-chevron-up"></span>
+      </a>
+    </div>
+    <span class="detail_type">Function</span>
+    <span class="signature">
+      alchemist-project-p
+    </span>
+    <span class="arguments"></span>
+  </div>
+  <div class="docstring">
+    <p>Returns whether alchemist has access to a elixir project root or not<p>
+  </div>
+  
+<div class="view_source">Source: <a class="view_source_link" href="#">show</a></div>
+<div class="source">
+  <pre>
+    <code class="lisp">(defun alchemist-project-p ()
+  "Returns whether alchemist has access to a elixir project root or not"
+  (stringp (alchemist-project-root)))
+</code>
+</pre>
+</div>
+</li>
+
+<li>
+  <div class="detail_header" id="alchemist-project-parent-directory">
+    <div class="detail_header_links">
+      <a href="#alchemist-project-parent-directory" class="detail_link" title="Link to this function">
+       <span class="octicon octicon-link"></span>
+      </a>
+      <a class="to_top_link" href="#content" title="To the top of the page">
+       <span class="octicon octicon-chevron-up"></span>
+      </a>
+    </div>
+    <span class="detail_type">Function</span>
+    <span class="signature">
+      alchemist-project-parent-directory
+    </span>
+    <span class="arguments">a-directory</span>
+  </div>
+  <div class="docstring">
+    <p>Returns the directory of which a-directory is a child<p>
+  </div>
+  
+<div class="view_source">Source: <a class="view_source_link" href="#">show</a></div>
+<div class="source">
+  <pre>
+    <code class="lisp">(defun alchemist-project-parent-directory (a-directory)
+  "Returns the directory of which a-directory is a child"
+  (file-name-directory (directory-file-name a-directory)))
+</code>
+</pre>
+</div>
+</li>
+
+<li>
+  <div class="detail_header" id="alchemist-project-root">
+    <div class="detail_header_links">
+      <a href="#alchemist-project-root" class="detail_link" title="Link to this function">
+       <span class="octicon octicon-link"></span>
+      </a>
+      <a class="to_top_link" href="#content" title="To the top of the page">
+       <span class="octicon octicon-chevron-up"></span>
+      </a>
+    </div>
+    <span class="detail_type">Function</span>
+    <span class="signature">
+      alchemist-project-root
+    </span>
+    <span class="arguments">&optional directory</span>
+  </div>
+  <div class="docstring">
+    <p>Finds the root directory of the project by walking the directory tree until it finds a project root indicator.<p>
+  </div>
+  
+<div class="view_source">Source: <a class="view_source_link" href="#">show</a></div>
+<div class="source">
+  <pre>
+    <code class="lisp">(defun alchemist-project-root (&optional directory)
+  "Finds the root directory of the project by walking the directory tree until it finds a project root indicator."
+  (let* ((directory (file-name-as-directory (or directory (expand-file-name default-directory))))
+         (present-files (directory-files directory)))
+    (cond ((alchemist-project-root-directory-p directory) nil)
+          ((> (length (intersection present-files alchemist-project-deps-indicators :test 'string=)) 0)
+           (alchemist-project-root (file-name-directory (directory-file-name directory))))
+          ((> (length (intersection present-files alchemist-project-root-indicators :test 'string=)) 0) directory)
+          (t (alchemist-project-root (file-name-directory (directory-file-name directory)))))))
+</code>
+</pre>
+</div>
+</li>
+
+<li>
+  <div class="detail_header" id="alchemist-project-root-directory-p">
+    <div class="detail_header_links">
+      <a href="#alchemist-project-root-directory-p" class="detail_link" title="Link to this function">
+       <span class="octicon octicon-link"></span>
+      </a>
+      <a class="to_top_link" href="#content" title="To the top of the page">
+       <span class="octicon octicon-chevron-up"></span>
+      </a>
+    </div>
+    <span class="detail_type">Function</span>
+    <span class="signature">
+      alchemist-project-root-directory-p
+    </span>
+    <span class="arguments">a-directory</span>
+  </div>
+  <div class="docstring">
+    <p>Returns t if a-directory is the root<p>
+  </div>
+  
+<div class="view_source">Source: <a class="view_source_link" href="#">show</a></div>
+<div class="source">
+  <pre>
+    <code class="lisp">(defun alchemist-project-root-directory-p (a-directory)
+  "Returns t if a-directory is the root"
+  (equal a-directory (alchemist-project-parent-directory a-directory)))
+</code>
+</pre>
+</div>
+</li>
+
+<li>
+  <div class="detail_header" id="alchemist-project-toggle-complete-and-docs">
+    <div class="detail_header_links">
+      <a href="#alchemist-project-toggle-complete-and-docs" class="detail_link" title="Link to this function">
+       <span class="octicon octicon-link"></span>
+      </a>
+      <a class="to_top_link" href="#content" title="To the top of the page">
+       <span class="octicon octicon-chevron-up"></span>
+      </a>
+    </div>
+    <span class="detail_type">Function</span>
+    <span class="signature">
+      alchemist-project-toggle-complete-and-docs
+    </span>
+    <span class="arguments"></span>
+  </div>
+  <div class="docstring">
+    <p>Toggle between the complete and documention lookup for current elixir codebase.<p>
+  </div>
+  
+<div class="view_source">Source: <a class="view_source_link" href="#">show</a></div>
+<div class="source">
+  <pre>
+    <code class="lisp">(defun alchemist-project-toggle-complete-and-docs ()
+  "Toggle between the complete and documention lookup for current elixir codebase."
+  (interactive)
+  (if alchemist-project-codebase-complete-and-docs-enabled
+      (setq alchemist-project-codebase-complete-and-docs-enabled nil)
+    (setq alchemist-project-codebase-complete-and-docs-enabled t))
+  (if alchemist-project-codebase-complete-and-docs-enabled
+      (message "completion and documention for project codebase is enabled")
+    (message "The completion and documention for project codebase is disabled")))
+</code>
+</pre>
+</div>
+</li>
+
+<li>
+  <div class="detail_header" id="alchemist-version">
+    <div class="detail_header_links">
+      <a href="#alchemist-version" class="detail_link" title="Link to this function">
+       <span class="octicon octicon-link"></span>
+      </a>
+      <a class="to_top_link" href="#content" title="To the top of the page">
+       <span class="octicon octicon-chevron-up"></span>
+      </a>
+    </div>
+    <span class="detail_type">Function</span>
+    <span class="signature">
+      alchemist-version
+    </span>
+    <span class="arguments">&optional show-version</span>
+  </div>
+  <div class="docstring">
+    <p>Display Alchemist's version.<p>
+  </div>
+  
+<div class="view_source">Source: <a class="view_source_link" href="#">show</a></div>
+<div class="source">
+  <pre>
+    <code class="lisp">(defun alchemist-version (&optional show-version)
+  "Display Alchemist's version."
+  (interactive)
+  (message "Alchemist %s" (replace-regexp-in-string "-cvs" "snapshot" alchemist--version)))
+</code>
+</pre>
+</div>
+</li>
+
+<li>
+  <div class="detail_header" id="alchemist-buffer-mode-abbrev-table">
+    <div class="detail_header_links">
+      <a href="#alchemist-buffer-mode-abbrev-table" class="detail_link" title="Link to this function">
+       <span class="octicon octicon-link"></span>
+      </a>
+      <a class="to_top_link" href="#content" title="To the top of the page">
+       <span class="octicon octicon-chevron-up"></span>
+      </a>
+    </div>
+    <span class="detail_type">Variable</span>
+    <span class="signature">
+      alchemist-buffer-mode-abbrev-table
+    </span>
+    <span class="arguments"></span>
+  </div>
+  <div class="docstring">
+    <p>Abbrev table for `alchemist-buffer-mode'.<p>
+  </div>
+  
+</li>
+
+<li>
+  <div class="detail_header" id="alchemist-buffer-mode-hook">
+    <div class="detail_header_links">
+      <a href="#alchemist-buffer-mode-hook" class="detail_link" title="Link to this function">
+       <span class="octicon octicon-link"></span>
+      </a>
+      <a class="to_top_link" href="#content" title="To the top of the page">
+       <span class="octicon octicon-chevron-up"></span>
+      </a>
+    </div>
+    <span class="detail_type">Variable</span>
+    <span class="signature">
+      alchemist-buffer-mode-hook
+    </span>
+    <span class="arguments"></span>
+  </div>
+  <div class="docstring">
+    <p>Hook run after entering Elixir mode.<p><p>No problems result if this variable is not bound.<p><p>`add-hook' automatically binds it.  (This is true for all hook variables.)<p>
+  </div>
+  
+</li>
+
+<li>
+  <div class="detail_header" id="alchemist-buffer-mode-map">
+    <div class="detail_header_links">
+      <a href="#alchemist-buffer-mode-map" class="detail_link" title="Link to this function">
+       <span class="octicon octicon-link"></span>
+      </a>
+      <a class="to_top_link" href="#content" title="To the top of the page">
+       <span class="octicon octicon-chevron-up"></span>
+      </a>
+    </div>
+    <span class="detail_type">Variable</span>
+    <span class="signature">
+      alchemist-buffer-mode-map
+    </span>
+    <span class="arguments"></span>
+  </div>
+  <div class="docstring">
+    <p>Keymap for `alchemist-buffer-mode'.<p>
+  </div>
+  
+</li>
+
+<li>
+  <div class="detail_header" id="alchemist-buffer-mode-syntax-table">
+    <div class="detail_header_links">
+      <a href="#alchemist-buffer-mode-syntax-table" class="detail_link" title="Link to this function">
+       <span class="octicon octicon-link"></span>
+      </a>
+      <a class="to_top_link" href="#content" title="To the top of the page">
+       <span class="octicon octicon-chevron-up"></span>
+      </a>
+    </div>
+    <span class="detail_type">Variable</span>
+    <span class="signature">
+      alchemist-buffer-mode-syntax-table
+    </span>
+    <span class="arguments"></span>
+  </div>
+  <div class="docstring">
+    <p>Syntax table for `alchemist-buffer-mode'.<p>
+  </div>
+  
+</li>
+
+<li>
+  <div class="detail_header" id="alchemist-buffer-status-modeline">
+    <div class="detail_header_links">
+      <a href="#alchemist-buffer-status-modeline" class="detail_link" title="Link to this function">
+       <span class="octicon octicon-link"></span>
+      </a>
+      <a class="to_top_link" href="#content" title="To the top of the page">
+       <span class="octicon octicon-chevron-up"></span>
+      </a>
+    </div>
+    <span class="detail_type">Variable</span>
+    <span class="signature">
+      alchemist-buffer-status-modeline
+    </span>
+    <span class="arguments"></span>
+  </div>
+  <div class="docstring">
+    <p>If t, the face of the Elixir mode name in the modeline<p><p>changes depending on the success or failure of commands such as 'mix test'.<p>
+  </div>
+  
+</li>
+
+<li>
+  <div class="detail_header" id="alchemist-compile-buffer-name">
+    <div class="detail_header_links">
+      <a href="#alchemist-compile-buffer-name" class="detail_link" title="Link to this function">
+       <span class="octicon octicon-link"></span>
+      </a>
+      <a class="to_top_link" href="#content" title="To the top of the page">
+       <span class="octicon octicon-chevron-up"></span>
+      </a>
+    </div>
+    <span class="detail_type">Variable</span>
+    <span class="signature">
+      alchemist-compile-buffer-name
+    </span>
+    <span class="arguments"></span>
+  </div>
+  <div class="docstring">
+    <p>Name of the elixir output buffer.<p>
+  </div>
+  
+</li>
+
+<li>
+  <div class="detail_header" id="alchemist-compile-command">
+    <div class="detail_header_links">
+      <a href="#alchemist-compile-command" class="detail_link" title="Link to this function">
+       <span class="octicon octicon-link"></span>
+      </a>
+      <a class="to_top_link" href="#content" title="To the top of the page">
+       <span class="octicon octicon-chevron-up"></span>
+      </a>
+    </div>
+    <span class="detail_type">Variable</span>
+    <span class="signature">
+      alchemist-compile-command
+    </span>
+    <span class="arguments"></span>
+  </div>
+  <div class="docstring">
+    <p>The shell command for elixirc.<p>
+  </div>
+  
+</li>
+
+<li>
+  <div class="detail_header" id="alchemist-execute-buffer-name">
+    <div class="detail_header_links">
+      <a href="#alchemist-execute-buffer-name" class="detail_link" title="Link to this function">
+       <span class="octicon octicon-link"></span>
+      </a>
+      <a class="to_top_link" href="#content" title="To the top of the page">
+       <span class="octicon octicon-chevron-up"></span>
+      </a>
+    </div>
+    <span class="detail_type">Variable</span>
+    <span class="signature">
+      alchemist-execute-buffer-name
+    </span>
+    <span class="arguments"></span>
+  </div>
+  <div class="docstring">
+    <p>Name of the elixir output buffer.<p>
+  </div>
+  
+</li>
+
+<li>
+  <div class="detail_header" id="alchemist-execute-command">
+    <div class="detail_header_links">
+      <a href="#alchemist-execute-command" class="detail_link" title="Link to this function">
+       <span class="octicon octicon-link"></span>
+      </a>
+      <a class="to_top_link" href="#content" title="To the top of the page">
+       <span class="octicon octicon-chevron-up"></span>
+      </a>
+    </div>
+    <span class="detail_type">Variable</span>
+    <span class="signature">
+      alchemist-execute-command
+    </span>
+    <span class="arguments"></span>
+  </div>
+  <div class="docstring">
+    <p>The shell command for elixir.<p>
+  </div>
+  
+</li>
+
+<li>
+  <div class="detail_header" id="alchemist-help-buffer-name">
+    <div class="detail_header_links">
+      <a href="#alchemist-help-buffer-name" class="detail_link" title="Link to this function">
+       <span class="octicon octicon-link"></span>
+      </a>
+      <a class="to_top_link" href="#content" title="To the top of the page">
+       <span class="octicon octicon-chevron-up"></span>
+      </a>
+    </div>
+    <span class="detail_type">Variable</span>
+    <span class="signature">
+      alchemist-help-buffer-name
+    </span>
+    <span class="arguments"></span>
+  </div>
+  <div class="docstring">
+    <p>Name of the elixir help buffer.<p>
+  </div>
+  
+</li>
+
+<li>
+  <div class="detail_header" id="alchemist-help-current-search-text">
+    <div class="detail_header_links">
+      <a href="#alchemist-help-current-search-text" class="detail_link" title="Link to this function">
+       <span class="octicon octicon-link"></span>
+      </a>
+      <a class="to_top_link" href="#content" title="To the top of the page">
+       <span class="octicon octicon-chevron-up"></span>
+      </a>
+    </div>
+    <span class="detail_type">Variable</span>
+    <span class="signature">
+      alchemist-help-current-search-text
+    </span>
+    <span class="arguments"></span>
+  </div>
+  <div class="docstring">
+    <p>Stores the current search text.<p>
+  </div>
+  
+</li>
+
+<li>
+  <div class="detail_header" id="alchemist-help-docs-ansi-color-enabled">
+    <div class="detail_header_links">
+      <a href="#alchemist-help-docs-ansi-color-enabled" class="detail_link" title="Link to this function">
+       <span class="octicon octicon-link"></span>
+      </a>
+      <a class="to_top_link" href="#content" title="To the top of the page">
+       <span class="octicon octicon-chevron-up"></span>
+      </a>
+    </div>
+    <span class="detail_type">Variable</span>
+    <span class="signature">
+      alchemist-help-docs-ansi-color-enabled
+    </span>
+    <span class="arguments"></span>
+  </div>
+  <div class="docstring">
+    <p>If non-nil, `alchemist-help' will present<p><p>ansi formatted documention<p>
+  </div>
+  
+</li>
+
+<li>
+  <div class="detail_header" id="alchemist-help-minor-mode">
+    <div class="detail_header_links">
+      <a href="#alchemist-help-minor-mode" class="detail_link" title="Link to this function">
+       <span class="octicon octicon-link"></span>
+      </a>
+      <a class="to_top_link" href="#content" title="To the top of the page">
+       <span class="octicon octicon-chevron-up"></span>
+      </a>
+    </div>
+    <span class="detail_type">Function</span>
+    <span class="signature">
+      alchemist-help-minor-mode
+    </span>
+    <span class="arguments">&optional arg</span>
+  </div>
+  <div class="docstring">
+    <p>Minor mode for displaying elixir help.<p>
+  </div>
+  
+<div class="view_source">Source: <a class="view_source_link" href="#">show</a></div>
+<div class="source">
+  <pre>
+    <code class="lisp">(define-minor-mode alchemist-help-minor-mode
+  "Minor mode for displaying elixir help."
+  :group 'alchemist-help
+  :keymap '(("q" . quit-window)
+            ("e" . alchemist-help-search-at-point)
+            ("m" . alchemist-help-search-marked-region)
+            ("s" . alchemist-help)
+            ("n" . alchemist-help-next-search)
+            ("p" . alchemist-help-previous-search)
+            ("?" . alchemist-help-minor-mode-key-binding-summary)))
+</code>
+</pre>
+</div>
+</li>
+
+<li>
+  <div class="detail_header" id="alchemist-help-minor-mode-hook">
+    <div class="detail_header_links">
+      <a href="#alchemist-help-minor-mode-hook" class="detail_link" title="Link to this function">
+       <span class="octicon octicon-link"></span>
+      </a>
+      <a class="to_top_link" href="#content" title="To the top of the page">
+       <span class="octicon octicon-chevron-up"></span>
+      </a>
+    </div>
+    <span class="detail_type">Variable</span>
+    <span class="signature">
+      alchemist-help-minor-mode-hook
+    </span>
+    <span class="arguments"></span>
+  </div>
+  <div class="docstring">
+    <p>Hook run after entering or leaving `alchemist-help-minor-mode'.<p><p>No problems result if this variable is not bound.<p><p>`add-hook' automatically binds it.  (This is true for all hook variables.)<p>
+  </div>
+  
+</li>
+
+<li>
+  <div class="detail_header" id="alchemist-help-minor-mode-map">
+    <div class="detail_header_links">
+      <a href="#alchemist-help-minor-mode-map" class="detail_link" title="Link to this function">
+       <span class="octicon octicon-link"></span>
+      </a>
+      <a class="to_top_link" href="#content" title="To the top of the page">
+       <span class="octicon octicon-chevron-up"></span>
+      </a>
+    </div>
+    <span class="detail_type">Variable</span>
+    <span class="signature">
+      alchemist-help-minor-mode-map
+    </span>
+    <span class="arguments"></span>
+  </div>
+  <div class="docstring">
+    <p>Keymap for `alchemist-help-minor-mode'.<p>
+  </div>
+  
+</li>
+
+<li>
+  <div class="detail_header" id="alchemist-help-mix-run-command">
+    <div class="detail_header_links">
+      <a href="#alchemist-help-mix-run-command" class="detail_link" title="Link to this function">
+       <span class="octicon octicon-link"></span>
+      </a>
+      <a class="to_top_link" href="#content" title="To the top of the page">
+       <span class="octicon octicon-chevron-up"></span>
+      </a>
+    </div>
+    <span class="detail_type">Variable</span>
+    <span class="signature">
+      alchemist-help-mix-run-command
+    </span>
+    <span class="arguments"></span>
+  </div>
+  <div class="docstring">
+    <p>The shell command for `mix run`.<p>
+  </div>
+  
+</li>
+
+<li>
+  <div class="detail_header" id="alchemist-help-search-history">
+    <div class="detail_header_links">
+      <a href="#alchemist-help-search-history" class="detail_link" title="Link to this function">
+       <span class="octicon octicon-link"></span>
+      </a>
+      <a class="to_top_link" href="#content" title="To the top of the page">
+       <span class="octicon octicon-chevron-up"></span>
+      </a>
+    </div>
+    <span class="detail_type">Variable</span>
+    <span class="signature">
+      alchemist-help-search-history
+    </span>
+    <span class="arguments"></span>
+  </div>
+  <div class="docstring">
+    <p>Stores the search history.<p>
+  </div>
+  
+</li>
+
+<li>
+  <div class="detail_header" id="alchemist-help-search-history-index">
+    <div class="detail_header_links">
+      <a href="#alchemist-help-search-history-index" class="detail_link" title="Link to this function">
+       <span class="octicon octicon-link"></span>
+      </a>
+      <a class="to_top_link" href="#content" title="To the top of the page">
+       <span class="octicon octicon-chevron-up"></span>
+      </a>
+    </div>
+    <span class="detail_type">Variable</span>
+    <span class="signature">
+      alchemist-help-search-history-index
+    </span>
+    <span class="arguments"></span>
+  </div>
+  <div class="docstring">
+    <p>Stores the current position in the search history.<p>
+  </div>
+  
+</li>
+
+<li>
+  <div class="detail_header" id="alchemist-hooks-test-on-save">
+    <div class="detail_header_links">
+      <a href="#alchemist-hooks-test-on-save" class="detail_link" title="Link to this function">
+       <span class="octicon octicon-link"></span>
+      </a>
+      <a class="to_top_link" href="#content" title="To the top of the page">
+       <span class="octicon octicon-chevron-up"></span>
+      </a>
+    </div>
+    <span class="detail_type">Variable</span>
+    <span class="signature">
+      alchemist-hooks-test-on-save
+    </span>
+    <span class="arguments"></span>
+  </div>
+  <div class="docstring">
+    <p>If t, run `alchemist-mix-test' on save.<p>
+  </div>
+  
+</li>
+
+<li>
+  <div class="detail_header" id="alchemist-mix-buffer-name">
+    <div class="detail_header_links">
+      <a href="#alchemist-mix-buffer-name" class="detail_link" title="Link to this function">
+       <span class="octicon octicon-link"></span>
+      </a>
+      <a class="to_top_link" href="#content" title="To the top of the page">
+       <span class="octicon octicon-chevron-up"></span>
+      </a>
+    </div>
+    <span class="detail_type">Variable</span>
+    <span class="signature">
+      alchemist-mix-buffer-name
+    </span>
+    <span class="arguments"></span>
+  </div>
+  <div class="docstring">
+    <p>Name of the mix output buffer.<p>
+  </div>
+  
+</li>
+
+<li>
+  <div class="detail_header" id="alchemist-mix-command">
+    <div class="detail_header_links">
+      <a href="#alchemist-mix-command" class="detail_link" title="Link to this function">
+       <span class="octicon octicon-link"></span>
+      </a>
+      <a class="to_top_link" href="#content" title="To the top of the page">
+       <span class="octicon octicon-chevron-up"></span>
+      </a>
+    </div>
+    <span class="detail_type">Variable</span>
+    <span class="signature">
+      alchemist-mix-command
+    </span>
+    <span class="arguments"></span>
+  </div>
+  <div class="docstring">
+    <p>The shell command for mix.<p>
+  </div>
+  
+</li>
+
+<li>
+  <div class="detail_header" id="alchemist-mode">
+    <div class="detail_header_links">
+      <a href="#alchemist-mode" class="detail_link" title="Link to this function">
+       <span class="octicon octicon-link"></span>
+      </a>
+      <a class="to_top_link" href="#content" title="To the top of the page">
+       <span class="octicon octicon-chevron-up"></span>
+      </a>
+    </div>
+    <span class="detail_type">Function</span>
+    <span class="signature">
+      alchemist-mode
+    </span>
+    <span class="arguments">&optional arg</span>
+  </div>
+  <div class="docstring">
+    <p>Toggle alchemist mode.<p><p><p><p>Key bindings:<p><p>key             binding<p><p>---             -------<p><p><p><p>C-c		Prefix Command<p><p><p><p>C-c a		Prefix Command<p><p><p><p>C-c a c		Prefix Command<p><p>C-c a e		Prefix Command<p><p>C-c a h		Prefix Command<p><p>C-c a m		Prefix Command<p><p>C-c a t		alchemist-mix-test<p><p><p><p>C-c a h e	alchemist-help-search-at-point<p><p>C-c a h h	alchemist-help<p><p>C-c a h m	alchemist-help-search-marked-region<p><p><p><p>C-c a e b	alchemist-execute-this-buffer<p><p>C-c a e e	alchemist-execute<p><p>C-c a e f	alchemist-execute-file<p><p><p><p>C-c a c b	alchemist-compile-this-buffer<p><p>C-c a c c	alchemist-compile<p><p>C-c a c f	alchemist-compile-file<p><p><p><p>C-c a m t	Prefix Command<p><p><p><p>C-c a m t .	alchemist-mix-test-at-point<p><p>C-c a m t b	alchemist-mix-test-this-buffer<p><p>C-c a m t f	alchemist-mix-test-file<p><p><p><p><p>
+  </div>
+  
+<div class="view_source">Source: <a class="view_source_link" href="#">show</a></div>
+<div class="source">
+  <pre>
+    <code class="lisp">(define-minor-mode alchemist-mode
+  "Toggle alchemist mode.
+
+Key bindings:
+\{alchemist-mode-map}"
+  nil
+  ;; The indicator for the mode line.
+  " alchemist"
+  :group 'alchemist
+  :global nil
+  :keymap 'alchemist-mode-map
+  (cond (alchemist-mode
+         (alchemist-buffer-initialize-modeline))
+        (t
+         (alchemist-buffer-reset-modeline))))
+</code>
+</pre>
+</div>
+</li>
+
+<li>
+  <div class="detail_header" id="alchemist-mode-hook">
+    <div class="detail_header_links">
+      <a href="#alchemist-mode-hook" class="detail_link" title="Link to this function">
+       <span class="octicon octicon-link"></span>
+      </a>
+      <a class="to_top_link" href="#content" title="To the top of the page">
+       <span class="octicon octicon-chevron-up"></span>
+      </a>
+    </div>
+    <span class="detail_type">Function</span>
+    <span class="signature">
+      alchemist-mode-hook
+    </span>
+    <span class="arguments"></span>
+  </div>
+  <div class="docstring">
+    <p>Hook which enables `alchemist-mode'<p>
+  </div>
+  
+<div class="view_source">Source: <a class="view_source_link" href="#">show</a></div>
+<div class="source">
+  <pre>
+    <code class="lisp">(defun alchemist-mode-hook ()
+  "Hook which enables `alchemist-mode'"
+  (alchemist-mode 1))
+</code>
+</pre>
+</div>
+</li>
+
+<li>
+  <div class="detail_header" id="alchemist-mode-map">
+    <div class="detail_header_links">
+      <a href="#alchemist-mode-map" class="detail_link" title="Link to this function">
+       <span class="octicon octicon-link"></span>
+      </a>
+      <a class="to_top_link" href="#content" title="To the top of the page">
+       <span class="octicon octicon-chevron-up"></span>
+      </a>
+    </div>
+    <span class="detail_type">Variable</span>
+    <span class="signature">
+      alchemist-mode-map
+    </span>
+    <span class="arguments"></span>
+  </div>
+  <div class="docstring">
+    <p>Keymap for `alchemist-mode'.<p>
+  </div>
+  
+</li>
+
+<li>
+  <div class="detail_header" id="alchemist-project-codebase-complete-and-docs-enabled">
+    <div class="detail_header_links">
+      <a href="#alchemist-project-codebase-complete-and-docs-enabled" class="detail_link" title="Link to this function">
+       <span class="octicon octicon-link"></span>
+      </a>
+      <a class="to_top_link" href="#content" title="To the top of the page">
+       <span class="octicon octicon-chevron-up"></span>
+      </a>
+    </div>
+    <span class="detail_type">Variable</span>
+    <span class="signature">
+      alchemist-project-codebase-complete-and-docs-enabled
+    </span>
+    <span class="arguments"></span>
+  </div>
+  <div class="docstring">
+    <p>When `t', it enables the completion and documention lookup for<p><p>the project specific codebase.<p>
+  </div>
+  
+</li>
+
+<li>
+  <div class="detail_header" id="alchemist-project-config-filename">
+    <div class="detail_header_links">
+      <a href="#alchemist-project-config-filename" class="detail_link" title="Link to this function">
+       <span class="octicon octicon-link"></span>
+      </a>
+      <a class="to_top_link" href="#content" title="To the top of the page">
+       <span class="octicon octicon-chevron-up"></span>
+      </a>
+    </div>
+    <span class="detail_type">Variable</span>
+    <span class="signature">
+      alchemist-project-config-filename
+    </span>
+    <span class="arguments"></span>
+  </div>
+  <div class="docstring">
+    <p>Name of the file which holds the Elixir project setup.<p>
+  </div>
+  
+</li>
+
+<li>
+  <div class="detail_header" id="alchemist-project-deps-indicators">
+    <div class="detail_header_links">
+      <a href="#alchemist-project-deps-indicators" class="detail_link" title="Link to this function">
+       <span class="octicon octicon-link"></span>
+      </a>
+      <a class="to_top_link" href="#content" title="To the top of the page">
+       <span class="octicon octicon-chevron-up"></span>
+      </a>
+    </div>
+    <span class="detail_type">Variable</span>
+    <span class="signature">
+      alchemist-project-deps-indicators
+    </span>
+    <span class="arguments"></span>
+  </div>
+  <div class="docstring">
+    <p>list of file-/directory-names which indicate a root of a elixir project<p>
+  </div>
+  
+</li>
+
+<li>
+  <div class="detail_header" id="alchemist-project-root-indicators">
+    <div class="detail_header_links">
+      <a href="#alchemist-project-root-indicators" class="detail_link" title="Link to this function">
+       <span class="octicon octicon-link"></span>
+      </a>
+      <a class="to_top_link" href="#content" title="To the top of the page">
+       <span class="octicon octicon-chevron-up"></span>
+      </a>
+    </div>
+    <span class="detail_type">Variable</span>
+    <span class="signature">
+      alchemist-project-root-indicators
+    </span>
+    <span class="arguments"></span>
+  </div>
+  <div class="docstring">
+    <p>list of file-/directory-names which indicate a root of a elixir project<p>
+  </div>
+  
+</li>
+
+            </ul>
+          </div>
+        </div>
+        <script src="js/vendor/list.min.js"></script>
+        <script src="js/main.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script>
+    </body>
+</html>
