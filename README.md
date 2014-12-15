@@ -1,1 +1,1 @@
-# OWL example of a generated API documentation
+# Example of a generated API documentation
